@@ -49,6 +49,8 @@ try {
             }
         } } catch { Write-Warning 'Установка завершена, но создать ярлыки не удалось. Для обновления запустите новый установщик из GitHub Releases.' }
     }
-    if (Test-Path -LiteralPath $discord.Exe) { Start-Process -FilePath $discord.Exe -WindowStyle Normal }
+    if ($env:CSDT_RESULT_FILE) {
+        Write-CSDTJson $env:CSDT_RESULT_FILE ([ordered]@{ executable = $discord.Exe })
+    } else { Write-Host 'Установка завершена. Откройте Discord обычным ярлыком.' }
     exit 0
 } catch { Write-Host $_.Exception.Message -ForegroundColor Red; exit 1 }

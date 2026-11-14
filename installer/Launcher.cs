@@ -125,7 +125,11 @@ class Launcher {
                 process.Arguments = "-NoProfile -ExecutionPolicy Bypass -File \"" + Path.Combine(directory, "Install.ps1") + "\"" + (rollback ? " -Rollback" : "");
                 process.EnvironmentVariables["CSDT_CONFIRMED"] = "1";
                 process.EnvironmentVariables["CSDT_SETUP_EXE"] = Assembly.GetExecutingAssembly().Location;
+                process.EnvironmentVariables["CSDT_RESULT_FILE"] = Path.Combine(directory, "launch.json");
                 using (var child = Process.Start(process)) { child.WaitForExit(); if (child.ExitCode != 0) throw new Exception("Установка не завершена. Подробности указаны в окне установщика. Предыдущая версия сохранена в резервной копии."); }
+                var result = new JavaScriptSerializer().Deserialize<Dictionary<string, object>>(File.ReadAllText(Path.Combine(directory, "launch.json")));
+                try { DiscordStart.Start(Convert.ToString(result["executable"])); }
+                catch { MessageBox.Show("Установка завершена, но автоматически открыть Discord не удалось. Откройте его обычным ярлыком.", "Discord Tickets"); return 0; }
                 MessageBox.Show(rollback ? "Предыдущее подключение восстановлено." : "Готово! Плагин установлен. Discord запущен.\n\nОбновление: ярлык «Обновить Discord Tickets» в меню Пуск или новый установщик из GitHub Releases.", "Discord Tickets");
                 return 0;
             } finally {

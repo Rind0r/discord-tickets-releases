@@ -20,6 +20,7 @@ async function add(source, destination = source, bom = false) {
 for (const name of ["patcher.js", "preload.js", "renderer.js", "renderer.css", "patcher.js.LEGAL.txt", "renderer.js.LEGAL.txt"])
     await add("vendor/Vencord/dist/" + name, "dist/" + name);
 const renderer = Buffer.from(files["dist/renderer.js"]).toString();
+if (renderer.includes('"Tracer"')) throw Error("Public installers require a production Vencord build without --dev.");
 if (!renderer.includes("CSDT_PUBLIC_EMPTY_CATALOG_V1")) throw Error("Privacy gate: compiled renderer predates the empty-catalog policy. Rebuild Vencord first.");
 const compiledCatalog = JSON.parse(await readFile(new URL("../vendor/Vencord/src/userplugins/discordTickets/catalog.json", import.meta.url), "utf8"));
 if (compiledCatalog.templates?.length !== 0) throw Error("Privacy gate: copied Vencord sources contain personal templates.");
@@ -53,7 +54,7 @@ const output = fileURLToPath(new URL("../dist/Discord-Tickets-Setup.exe", import
 const compiler = process.env.CSDT_CSC || (process.env.WINDIR + "\\Microsoft.NET\\Framework64\\v4.0.30319\\csc.exe");
 execFileSync(compiler, ["/nologo", "/target:exe", "/platform:anycpu", "/optimize+", "/utf8output", "/out:" + output,
     "/r:System.IO.Compression.dll", "/r:System.IO.Compression.FileSystem.dll", "/r:System.Windows.Forms.dll", "/r:System.Web.Extensions.dll",
-    "/resource:" + fileURLToPath(new URL("payload.zip", payloadDir)) + ",payload.zip", fileURLToPath(new URL("Launcher.cs", payloadDir))], { stdio: "inherit" });
+    "/resource:" + fileURLToPath(new URL("payload.zip", payloadDir)) + ",payload.zip", fileURLToPath(new URL("Launcher.cs", payloadDir)), fileURLToPath(new URL("../installer/DiscordStart.cs", import.meta.url))], { stdio: "inherit" });
 const sha256 = hash(await readFile(output));
 await writeFile(new URL("../dist/latest.json", import.meta.url), JSON.stringify({ format: 1, version: config.version, url: "https://github.com/" + config.repository + "/releases/download/v" + config.version + "/Discord-Tickets-Setup.exe", sha256 }, null, 2) + "\n");
 await writeFile(output + ".sha256", sha256 + "  Discord-Tickets-Setup.exe\n");

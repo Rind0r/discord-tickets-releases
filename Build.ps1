@@ -40,7 +40,7 @@ try {
     Assert-NativeSuccess "Check TypeScript"
     & node (Join-Path $PSScriptRoot "scripts\check-bootstrap.mjs") $VencordPath
     Assert-NativeSuccess "Check plugin bootstrap before Discord React"
-    & pnpm build --dev --disable-updater
+    & pnpm build --disable-updater
     Assert-NativeSuccess "Build Vencord"
     Write-Host "Build ready: $(Join-Path $VencordPath 'dist')"
     Write-Host "Discord was not modified. See README.md for pnpm inject and enabling the plugin."
