@@ -1,0 +1,73 @@
+.csdt {
+    --csdt-surface: var(--background-surface-high, var(--background-secondary, Canvas));
+    --csdt-card: var(--card-background-default, var(--background-surface-higher, var(--background-primary, Canvas)));
+    --csdt-text: var(--text-default, var(--text-normal, CanvasText));
+    --csdt-subtle: var(--text-subtle, var(--text-muted, var(--csdt-text)));
+    --csdt-border: var(--border-normal, var(--border-subtle, var(--background-modifier-accent, currentColor)));
+    --csdt-hover: var(--background-mod-subtle, var(--background-modifier-hover, var(--csdt-card)));
+    color: var(--csdt-text);
+    font-family: var(--font-primary, system-ui, sans-serif);
+    font-size: 14px;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+}
+.csdt-stack { display: flex; flex-direction: column; gap: 14px; }
+.csdt label { display: block; font-weight: 500; }
+.csdt fieldset { min-width: 0; border: 1px solid var(--csdt-border); padding: 14px; border-radius: 10px; }
+.csdt legend { padding-inline: 5px; font-weight: 600; color: var(--csdt-text); }
+.csdt-controls { border: 0 !important; padding: 0 !important; }
+.csdt-check { display: flex !important; align-items: center; gap: 8px; }
+.csdt-input {
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    margin-top: 6px;
+    padding: 10px;
+    background: var(--input-background-default, var(--input-background, var(--csdt-card)));
+    color: var(--csdt-text);
+    border: 1px solid var(--csdt-border);
+    border-radius: 5px;
+    font: inherit;
+}
+.csdt-input:focus-visible, .csdt-choice:focus-visible { outline: 2px solid var(--border-focus, var(--brand-500, Highlight)); outline-offset: 2px; }
+.csdt-textarea { resize: vertical; max-height: 45vh; min-height: 100px; white-space: pre-wrap; }
+.csdt-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.csdt-muted { color: var(--csdt-subtle); margin: 4px 0; }
+.csdt-warning { color: var(--text-feedback-warning, var(--text-warning, var(--csdt-text))); margin: 6px 0; }
+.csdt-categories { max-height: 160px; overflow: auto; }
+.csdt-list { display: flex; flex-direction: column; gap: 10px; }
+.csdt-card { padding: 15px; border: 1px solid var(--csdt-border); border-radius: 10px; background: var(--csdt-card); }
+.csdt-card > strong, .csdt-choice > strong { display: block; color: var(--csdt-text); font-size: 15px; font-weight: 600; line-height: 1.4; }
+.csdt-snippet { display: block; color: var(--csdt-subtle); white-space: pre-wrap; overflow-wrap: anywhere; margin: 6px 0 10px; }
+.csdt-preview { white-space: pre-wrap; overflow-wrap: anywhere; max-height: 50vh; overflow: auto; font: inherit; color: var(--csdt-text); background: var(--csdt-card); border: 1px solid var(--csdt-border); padding: 16px; border-radius: 8px; user-select: text; }
+.csdt-suggestions { position: fixed; z-index: 100; box-sizing: border-box; padding: 12px; overflow: auto; background-color: var(--csdt-surface); border: 1px solid var(--csdt-border); border-radius: 12px; box-shadow: var(--elevation-high, 0 8px 24px rgb(0 0 0 / 25%)); isolation: isolate; }
+.csdt-panel-header { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 12px; padding: 2px 4px 10px; margin-bottom: 4px; border-bottom: 1px solid var(--csdt-border); }
+.csdt-panel-title { color: var(--csdt-text); font-size: 13px; font-weight: 600; }
+.csdt-panel-hint { color: var(--csdt-subtle); font-size: 12px; }
+.csdt-suggestion { display: flex; align-items: center; gap: 10px; padding: 6px; margin-top: 6px; background: var(--csdt-card); border: 1px solid var(--csdt-border); border-radius: 8px; }
+.csdt-choice { flex: 1; min-width: 0; background: none; border: 0; border-radius: 5px; padding: 7px; color: var(--csdt-text); text-align: start; font: inherit; cursor: pointer; }
+.csdt-choice:hover { background: var(--csdt-hover); }
+.csdt-choice .csdt-snippet { margin-bottom: 0; }
+.csdt-suggestion > button:not(.csdt-choice) { flex: 0 0 auto; }
+.csdt-preview-button { background: var(--csdt-card); color: var(--csdt-text); border: 1px solid var(--csdt-border); font: inherit; }
+.csdt-preview-button:hover { background: var(--csdt-hover); }
+.csdt-modal-title { display: inline-flex; align-items: center; flex-wrap: wrap; gap: 6px 10px; }
+.csdt-author { color: var(--text-subtle, var(--text-muted, inherit)); font-size: 12px; font-weight: 400; white-space: nowrap; }
+.csdt-catalog-badge { margin-inline-start: auto; color: var(--csdt-subtle); font-size: 12px; white-space: nowrap; }
+.csdt-panel-title { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; }
+.csdt-section-title { display: block; margin-bottom: 7px; font-weight: 600; }
+.csdt-select { margin-top: 7px; color: var(--csdt-text); }
+.csdt-formatbar { display: flex; flex-wrap: wrap; gap: 5px; }
+.csdt-format-button { min-width: 32px; }
+.csdt-format-button[data-format="bold"] { font-weight: 700; }
+.csdt-format-button[data-format="italic"] { font-style: italic; }
+.csdt-format-button[data-format="underline"] { text-decoration: underline; }
+.csdt-format-button[data-format="strike"] { text-decoration: line-through; }
+.csdt-match { padding: 0 1px; border-radius: 2px; color: var(--csdt-text); background: color-mix(in srgb, var(--csdt-text) 18%, var(--csdt-card)); box-shadow: inset 0 -2px 0 var(--brand-500, Highlight); font-weight: 700; }
+.csdt-rendered { white-space: pre-wrap; overflow-wrap: anywhere; user-select: text; }
+.csdt-rendered p { margin: 0 0 8px; }
+.csdt-rendered p:last-child { margin-bottom: 0; }
+.csdt-rendered pre { overflow: auto; max-width: 100%; white-space: pre; }
+.csdt-rendered blockquote { border-inline-start: 3px solid var(--csdt-border); padding-inline-start: 12px; margin: 8px 0; }
+.csdt-rendered ul, .csdt-rendered ol { padding-inline-start: 24px; }
+@media (width <= 500px) { .csdt-suggestion { align-items: stretch; flex-direction: column; } }
